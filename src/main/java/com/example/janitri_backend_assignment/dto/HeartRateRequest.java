@@ -1,9 +1,14 @@
 package com.example.janitri_backend_assignment.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
 public class HeartRateRequest {
+    @NotNull(message = "Patient ID is required")
     private Long patientId;
+    @Min(value = 30, message = "Please Enter Valid bpm (at Least 30)")
     private int bpm;
     private LocalDateTime recordedAt;
 

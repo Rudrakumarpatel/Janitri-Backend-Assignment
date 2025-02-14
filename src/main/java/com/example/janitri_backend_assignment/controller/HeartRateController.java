@@ -5,7 +5,9 @@ import com.example.janitri_backend_assignment.entity.HeartRate;
 import com.example.janitri_backend_assignment.entity.Patient;
 import com.example.janitri_backend_assignment.service.HeartRateService;
 import com.example.janitri_backend_assignment.service.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +23,13 @@ public class HeartRateController {
     private PatientService patientService;
 
     @PostMapping("/add")
-    public ResponseEntity<HeartRate> recordHeartRate(@RequestBody HeartRateRequest heartRateRequest) {
+    public ResponseEntity<?> recordHeartRate(@Valid @RequestBody HeartRateRequest heartRateRequest) {
         // Fetch the Patient entity by patientId
         Patient patient = patientService.getPatientsById(heartRateRequest.getPatientId());
 
         // If patient not found, return 404 error
         if (patient == null) {
-            return ResponseEntity.status(404).body(null); // Return Not Found if the patient doesn't exist
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
         }
 
         // Create the HeartRate entity and set the fields
