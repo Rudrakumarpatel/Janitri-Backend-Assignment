@@ -2,6 +2,9 @@ package com.example.janitri_backend_assignment.controller;
 
 import com.example.janitri_backend_assignment.entity.Patient;
 import com.example.janitri_backend_assignment.service.PatientService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +30,13 @@ public class PatientController {
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         System.out.println("in Patient with id");
-        return patientService.getPatientById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        if (patientService.getPatientById(id).isPresent()) {
+            System.out.println("Patient is present");
+            return patientService.getPatientById(id)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        }
+        return ResponseEntity.notFound().build();
     }
+
 }

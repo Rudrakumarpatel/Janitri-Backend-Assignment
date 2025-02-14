@@ -43,9 +43,13 @@ public class HeartRateController {
     }
 
     @GetMapping("/{patientId}")
-    public ResponseEntity<List<HeartRate>> getHeartRates(@PathVariable Long patientId) {
+    public ResponseEntity<?> getHeartRates(@PathVariable Long patientId) {
+        if (patientService.getPatientsById(patientId) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
+        }
         return ResponseEntity.ok(heartRateService.getHeartRatesByPatientId(patientId));
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<HeartRate>> getAllHeartRates() {
         List<HeartRate> heartRates = heartRateService.getAllHeartRates();
