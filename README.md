@@ -33,6 +33,9 @@ This is a backend development project for Janitri, focusing on monitoring patien
    git clone https://github.com/Rudrakumarpatel/Janitri-Backend-Assignment.git
    ```
 
+if possible so run this project on 
+IntelliJ IDEA 
+
 Navigate to the project directory:
 cd Janitri-Backend-Assignment
 
